@@ -7,7 +7,6 @@ use crossterm::style::Stylize;
 #[derive(clap::Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    #[arg(short, long)]
     file: String,
     
     #[arg(short, long, default_value_t = 1)]
