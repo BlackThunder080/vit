@@ -22,7 +22,14 @@ fn main() {
     
     let (width, height) = crossterm::terminal::size().unwrap();
     
-    let img = image::io::Reader::open(args.file).unwrap().decode().unwrap();
+    let img = if let Some(img) = from_file(&args.file) {
+        img
+    } else if let Some(img) = from_url(&args.file) {
+        img
+    } else {
+        todo!()
+    };
+    
     let resized = img.resize(
         width as u32,
         height as u32,
@@ -46,4 +53,12 @@ fn main() {
 fn pixel_to_colour(pixel: impl image::Pixel<Subpixel = u8>) -> crossterm::style::Color {
     let rgb = pixel.to_rgb();
     crossterm::style::Color::Rgb { r: rgb.0[0], g: rgb.0[1], b: rgb.0[2] }
+}
+
+fn from_file(path: &str) -> Option<image::DynamicImage> {
+    Some(image::io::Reader::open(path).ok()?.decode().ok()?)
+}
+
+fn from_url(path: &str) -> Option<image::DynamicImage> {
+    Some(image::load_from_memory(&reqwest::blocking::get(path).ok()?.bytes().ok()?).ok()?)
 }
