@@ -3,8 +3,6 @@ use std::io::Write;
 use clap::Parser;
 use image::GenericImageView;
 use crossterm::style::Stylize;
-
-#[cfg(feature = "clipboard")]
 use clipboard::ClipboardProvider;
 
 #[derive(clap::Parser, Debug)]
@@ -35,7 +33,7 @@ fn run() -> Result<(), String> {
 
     let file = match args.file {
         Some(file) => file,
-        None => paste()?,
+        None => clipboard::ClipboardContext::new().map_err(|_| "")?.get_contents().map_err(|_| "failed to get clipboard contents")?,
     };
 
     let img = if let Some(img) = from_file(&file) {
@@ -72,13 +70,6 @@ fn run() -> Result<(), String> {
     std::io::stdin().read_line(&mut String::new()).map_err(|_| "")?;
     
     Ok(())
-}
-
-fn paste() -> Result<String, String> {
-    #[cfg(feature = "clipboard")]
-    return Ok(clipboard::ClipboardContext::new().map_err(|_| "")?.get_contents().map_err(|_| "failed to get clipboard contents")?);
-    #[cfg(not(feature = "clipboard"))]
-    return Err("clipboard feature disabled".to_string());
 }
 
 fn pixel_to_colour(pixel: impl image::Pixel<Subpixel = u8>) -> crossterm::style::Color {

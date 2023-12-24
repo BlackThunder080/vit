@@ -11,14 +11,11 @@ cargo install vit
 or download from [releases](https://github.com/BlackThunder080/vit/releases)
 
 ## Dependancies
-On linux you need x11 installed, to install on ubuntu or debian run
+On linux you need x11 and openssl installed, to install on ubuntu or debian run
 ```
-sudo apt-get install xorg-dev
+sudo apt-get install xorg-dev libssl-dev
 ```
-Or install without clipboard support
-```
-cargo install --no-default-features
-```
+Windows and Mac do not require any dependancies
 
 ## Usage
 ```
