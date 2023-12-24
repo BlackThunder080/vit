@@ -29,11 +29,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
-          no-default-features: |
-            if [ "$RUNNER_OS" == "Linux" ]; then
-              true
-            else
-              false
           bin: vit
           tar: all
           zip: all
