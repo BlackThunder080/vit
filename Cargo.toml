@@ -7,10 +7,14 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/BlackThunder080/vit"
 
+[features]
+default = ["clipboard"]
+clipboard = ["dep:clipboard"]
+
 [dependencies]
 image = "0.24.7"
 crossterm = "0.27.0"
 reqwest = { version = "0.11.23", features = ["blocking"] }
 clap = { version = "4.4.11", features = ["derive"] }
-clipboard = "0.5.0"
+clipboard = { version = "0.5.0", optional = true }
 webbrowser = "0.8.12"
