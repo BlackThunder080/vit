@@ -3,13 +3,14 @@ use std::io::Write;
 use clap::Parser;
 use image::GenericImageView;
 use crossterm::style::Stylize;
+use clipboard::ClipboardProvider;
 
 #[derive(clap::Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    file: String,
+    file: Option<String>,
     
-    #[arg(short, long, default_value_t = 1)]
+    #[arg(short, long, default_value_t = 2)]
     char_size: u8,
 }
 
@@ -17,14 +18,19 @@ fn main() {
     let args = Args::parse();
     let mut stdout = std::io::stdout();
 
+    let file = match args.file {
+        Some(file) => file,
+        None => clipboard::ClipboardContext::new().unwrap().get_contents().unwrap(),
+    };
+
     crossterm::terminal::enable_raw_mode().unwrap();
     crossterm::queue!(stdout, crossterm::terminal::Clear(crossterm::terminal::ClearType::All)).unwrap();
     
     let (width, height) = crossterm::terminal::size().unwrap();
-    
-    let img = if let Some(img) = from_file(&args.file) {
+
+    let img = if let Some(img) = from_file(&file) {
         img
-    } else if let Some(img) = from_url(&args.file) {
+    } else if let Some(img) = from_url(&file) {
         img
     } else {
         todo!()
