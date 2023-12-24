@@ -6,7 +6,7 @@
 ## Install
 Install using cargo
 ```
-cargo install wasm-bindgen-cli
+cargo install vit
 ```
 or download from [releases](https://github.com/BlackThunder080/vit/releases)
 
