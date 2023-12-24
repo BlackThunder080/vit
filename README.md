@@ -20,15 +20,18 @@ Windows and Mac do not require any dependancies
 ## Usage
 ```
 $ vit --help
-Usage: vit.exe [OPTIONS] <FILE>
+View Image in Terminal
+
+Usage: vit.exe [OPTIONS] [FILE]
 
 Arguments:
-  <FILE>
+  [FILE]  Path to image: can be a file or url. If no path is provided the clipboard will be used
 
 Options:
-  -c, --char-size <CHAR_SIZE>  [default: 1]
-  -h, --help                   Print help
-  -V, --version                Print version
+  -c <CHARS>      Number of characters per pixel [default: 2]
+  -b              Open in browser as well
+  -h, --help      Print help
+  -V, --version   Print version
 ```
 `file` can be a path to a file or an image url
 
