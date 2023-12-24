@@ -13,3 +13,4 @@ crossterm = "0.27.0"
 reqwest = { version = "0.11.23", features = ["blocking"] }
 clap = { version = "4.4.11", features = ["derive"] }
 clipboard = "0.5.0"
+webbrowser = "0.8.12"
